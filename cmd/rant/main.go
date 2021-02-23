@@ -5,8 +5,10 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -24,6 +26,8 @@ var slack Slack
 var config Config
 
 func main() {
+
+	rand.Seed(time.Now().UnixNano())
 
 	configPath := flag.String("config-path", "", "provide path to the json config file")
 	flag.Parse()

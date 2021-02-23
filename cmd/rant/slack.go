@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -112,14 +111,10 @@ func (s *Slack) Authenticate(code string) error {
 
 func (s *Slack) Rant(sc SlashCommand) error {
 
-	upperCased := strings.ToUpper(sc.Text)
-	tripleExclaimed := strings.ReplaceAll(upperCased, "!", "!!!")
-	questionExclaimed := strings.ReplaceAll(tripleExclaimed, "?", "?!")
-
 	rant := fmt.Sprintf(
-		"<@%s>: %s",
+		"<@%s> has something to say:\n %s",
 		sc.UserId,
-		questionExclaimed,
+		Rage(sc.Text),
 	)
 
 	reply := CommandReply{
