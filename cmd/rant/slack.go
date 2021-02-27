@@ -114,7 +114,7 @@ func (s *Slack) Rant(sc SlashCommand) error {
 	rant := fmt.Sprintf(
 		"<@%s> has something to say:\n %s",
 		sc.UserId,
-		Rage(sc.Text),
+		Rant(sc.Text),
 	)
 
 	reply := CommandReply{
