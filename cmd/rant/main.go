@@ -13,7 +13,7 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/schema"
-	"github.com/prologic/bitcask"
+	"git.mills.io/prologic/bitcask"
 	log "github.com/sirupsen/logrus"
 
 	"badgerbadgerbadgerbadger.dev/goplay/internal/util"
