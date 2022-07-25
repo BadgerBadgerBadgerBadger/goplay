@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 
-	"badgerbadgerbadgerbadger.dev/goplay/pkg/util"
+	"github.com/BadgerBadgerBadgerBadger/goplay/pkg/util"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/pkg/errors"
 )

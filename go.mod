@@ -1,4 +1,4 @@
-module badgerbadgerbadgerbadger.dev/goplay
+module github.com/BadgerBadgerBadgerBadger/goplay
 
 go 1.18
 
