@@ -1,5 +1,7 @@
 package util
 
+import log "github.com/sirupsen/logrus"
+
 type GenericMap map[string]interface{}
 
 // Must is a quick way to panic in programs if an error exists
@@ -16,5 +18,6 @@ func Must(err error, msgs ...string) {
 		finalMessage = finalMessage + " " + msg
 	}
 
+	log.Error(finalMessage)
 	panic(finalMessage)
 }
