@@ -59,6 +59,7 @@ require (
 	github.com/Antonboom/errname v1.0.0 // indirect
 	github.com/Antonboom/nilnil v1.0.1 // indirect
 	github.com/Antonboom/testifylint v1.5.2 // indirect
+	github.com/BourgeoisBear/rasterm v1.1.1 // indirect
 	github.com/Crocmagnon/fatcontext v0.7.1 // indirect
 	github.com/Djarvur/go-err113 v0.0.0-20210108212216-aea10b59be24 // indirect
 	github.com/GaijinEntertainment/go-exhaustruct/v3 v3.3.1 // indirect
@@ -161,6 +162,7 @@ require (
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
 	github.com/julz/importas v0.2.0 // indirect
 	github.com/karamaru-alpha/copyloopvar v1.2.1 // indirect
+	github.com/kevin-cantwell/dotmatrix v0.0.0-20190516234139-135e8f4a93cd // indirect
 	github.com/kisielk/errcheck v1.9.0 // indirect
 	github.com/kkHAIKE/contextcheck v1.1.6 // indirect
 	github.com/kulti/thelper v0.6.3 // indirect

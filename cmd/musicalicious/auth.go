@@ -28,6 +28,8 @@ func authenticate(ctx context.Context, cfg *Config) error {
 		spotifyauth.WithScopes(
 			spotifyauth.ScopeUserReadPrivate,
 			spotifyauth.ScopeUserReadEmail,
+			spotifyauth.ScopePlaylistReadPrivate,
+			spotifyauth.ScopePlaylistReadCollaborative,
 		),
 		spotifyauth.WithClientID(cfg.ClientID),
 		spotifyauth.WithClientSecret(cfg.ClientSecret),

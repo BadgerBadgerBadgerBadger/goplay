@@ -35,7 +35,7 @@ func run(ctx context.Context, args []string, out io.Writer) error {
 		fmt.Fprintln(out, "")
 
 		// Launch config UI
-		p := tea.NewProgram(newConfigModel(cfg))
+		p := tea.NewProgram(newConfigModel(cfg), tea.WithAltScreen())
 		m, err := p.StartReturningModel()
 		if err != nil {
 			return errors.Wrap(err, "failed to run config UI")
@@ -70,16 +70,67 @@ func run(ctx context.Context, args []string, out io.Writer) error {
 		}
 	}
 
-	// Launch main UI
+	// Create Spotify client
 	client, err := newSpotifyClient(cfg)
 	if err != nil {
 		return errors.Wrap(err, "failed to create spotify client")
 	}
 
-	p := tea.NewProgram(newProfileModel(client))
-	if _, err := p.StartReturningModel(); err != nil {
-		return errors.Wrap(err, "failed to run profile UI")
-	}
+	// Main menu loop
+	for {
+		// Show menu
+		p := tea.NewProgram(newMenuModel(client), tea.WithAltScreen())
+		m, err := p.StartReturningModel()
+		if err != nil {
+			return errors.Wrap(err, "failed to run menu")
+		}
 
-	return nil
+		menuModel, ok := m.(menuModel)
+		if !ok {
+			return errors.New("unexpected model type from menu")
+		}
+
+		// Handle menu selection
+		switch menuModel.selectedOption {
+		case MenuProfile:
+			// Show profile
+			p := tea.NewProgram(newProfileModel(client), tea.WithAltScreen())
+			if _, err := p.StartReturningModel(); err != nil {
+				return errors.Wrap(err, "failed to run profile UI")
+			}
+
+		case MenuSearch:
+			// Show search interface
+			p := tea.NewProgram(newSearchModel(client), tea.WithAltScreen())
+			if _, err := p.StartReturningModel(); err != nil {
+				return errors.Wrap(err, "failed to run search UI")
+			}
+
+		case MenuRefreshCache:
+			// Refresh cache
+			fmt.Fprintln(out, "\nRefreshing playlist cache...")
+			cache, err := GetOrBuildCache(ctx, client, true, func(current, total int, message string) {
+				fmt.Fprintf(out, "\r[%d/%d] %s", current, total, message)
+			})
+			if err != nil {
+				fmt.Fprintf(out, "\nError refreshing cache: %v\n", err)
+				fmt.Fprintln(out, "Press any key to continue...")
+				// Wait for keypress
+				var input string
+				fmt.Scanln(&input)
+			} else {
+				fmt.Fprintf(out, "\n\nCache refreshed! %d playlists loaded.\n", len(cache.Playlists))
+				fmt.Fprintln(out, "Press any key to continue...")
+				// Wait for keypress
+				var input string
+				fmt.Scanln(&input)
+			}
+
+		case MenuQuit:
+			return nil
+
+		default:
+			return nil
+		}
+	}
 }

@@ -1,2 +1,5 @@
 # User configuration
 config.json
+
+# Cache directory
+cache/
